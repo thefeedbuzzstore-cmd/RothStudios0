@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  --color-brand-primary: #e50914; /* Netflix Red */
+  --color-bg-dark: #0f1014;
+  --color-bg-offset: #1a1c22;
+}
+
+:root {
+  background-color: var(--color-bg-dark);
+  color: white;
+}
+
+.glass {
+  background: rgba(15, 16, 20, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.cinematic-gradient {
+  background: linear-gradient(0deg, var(--color-bg-dark) 0%, transparent 100%);
+}
+
+.horizontal-scroll-hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.horizontal-scroll-hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

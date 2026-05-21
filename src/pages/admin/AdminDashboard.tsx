@@ -23,6 +23,7 @@ import {
 } from 'recharts';
 import { motion } from 'motion/react';
 import { ProtectedRoute } from '../../components/ProtectedRoute';
+import { SEO } from '../../components/SEO';
 
 function StatCard({ title, value, icon: Icon, trend, color }: any) {
   return (
@@ -204,6 +205,11 @@ export default function AdminLayout({ children }: { children?: React.ReactNode }
   return (
     <ProtectedRoute requireAdmin>
       <AdminProvider>
+        <SEO 
+          title="RothStudios – Admin Portal" 
+          description="Internal RothStudios platform analytics dashboard and users and affiliate management terminal channels."
+          noindex={true}
+        />
         <div className="min-h-screen bg-black flex">
           <AdminSidebar />
           <main className="flex-1 p-8 md:p-12 overflow-y-auto">

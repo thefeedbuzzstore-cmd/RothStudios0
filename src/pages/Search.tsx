@@ -10,6 +10,8 @@ import { Button } from '../components/Button';
 import { useAuth } from '../context/AuthContext';
 import { analytics } from '../services/analytics';
 import { cn } from '../lib/utils';
+import { SEO } from '../components/SEO';
+import { schemaBuilders } from '../lib/seo';
 
 export default function Search() {
   const [query, setQuery] = useState('');
@@ -17,6 +19,12 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [activeMood, setActiveMood] = useState<string | null>(null);
   const { user } = useAuth();
+
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://rothstudios.com';
+  const breadcrumb = schemaBuilders.buildBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Search', url: '/search' }
+  ], origin);
 
   useEffect(() => {
     const search = async () => {
@@ -65,6 +73,12 @@ export default function Search() {
 
   return (
     <div className="pt-24 pb-20 px-4 md:px-12 max-w-7xl mx-auto space-y-12">
+      <SEO 
+        title="Search &amp; Discover Dynamic Movies | RothStudios"
+        description="Search for critically-acclaimed films, actors, directors, releases, and curated emotions dynamically on the RothStudios movie search engine."
+        canonicalPath="/search"
+        schemas={[breadcrumb]}
+      />
       <div className="space-y-8 text-center max-w-3xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tight">
           Discovery <span className="text-brand-primary italic">Engine</span>

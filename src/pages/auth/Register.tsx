@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Mail, Lock, UserPlus, AlertCircle, Play } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../../components/Button';
+import { SEO } from '../../components/SEO';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -45,6 +46,11 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+      <SEO 
+        title="Account Sign Up | RothStudios"
+        description="Create a free RothStudios member account today to build premium customized lists, watch trailers, and rate cinema on-demand."
+        noindex={true}
+      />
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-primary/10 blur-[120px] rounded-full" />

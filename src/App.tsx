@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { WatchlistProvider } from './context/WatchlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { AdminProvider } from './context/AdminContext';
@@ -12,6 +12,9 @@ import Home from './pages/Home';
 import MovieDetails from './pages/MovieDetails';
 import Search from './pages/Search';
 import Watchlist from './pages/Watchlist';
+import Trending from './pages/Trending';
+import TopRated from './pages/TopRated';
+import GenrePage from './pages/GenrePage';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -25,6 +28,17 @@ import { Toaster } from 'sonner';
 
 function AppContent() {
   const { user } = useAuth();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Initialize Google Analytics G-ROTHSTUDIOS on first app load
+    analytics.initGoogleAnalytics('G-ROTHSTUDIOS');
+  }, []);
+
+  useEffect(() => {
+    // Track page views in GA dynamically on route change
+    analytics.trackPageView(location.pathname);
+  }, [location.pathname]);
   
   return (
     <div className="min-h-screen bg-bg-dark text-white font-sans selection:bg-brand-primary selection:text-white">
@@ -34,6 +48,10 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/series/:id" element={<MovieDetails />} />
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/top-rated" element={<TopRated />} />
+          <Route path="/genre/:genreSlug" element={<GenrePage />} />
           <Route path="/search" element={<Search />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/login" element={<Login />} />

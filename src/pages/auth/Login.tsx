@@ -5,6 +5,7 @@ import { Mail, Lock, LogIn, AlertCircle, Play } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../../components/Button';
 import { cn } from '../../lib/utils';
+import { SEO } from '../../components/SEO';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -38,6 +39,11 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+      <SEO 
+        title="Account Sign In | RothStudios"
+        description="Sign in to your private RothStudios member account dashboard to access your customized movie lists, watchlist reviews, and stream trailers."
+        noindex={true}
+      />
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-primary/10 blur-[120px] rounded-full" />

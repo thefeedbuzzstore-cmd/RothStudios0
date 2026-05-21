@@ -47,6 +47,18 @@ export const tmdb = {
     }
   },
 
+  getTopRatedMovies: async (): Promise<Movie[]> => {
+    try {
+      const res = await fetch(`${BASE_URL}/movie/top_rated?api_key=${API_KEY}`);
+      if (!res.ok) throw new Error('API request failed');
+      const data: MovieResponse = await res.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('getTopRatedMovies error:', error);
+      return [];
+    }
+  },
+
   getMovieDetails: async (id: string | number): Promise<MovieDetails> => {
     const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits`);
     if (!res.ok) throw new Error('API request failed');
@@ -85,6 +97,63 @@ export const tmdb = {
       return data.results || [];
     } catch (error) {
       console.error('getMoviesByGenre error:', error);
+      return [];
+    }
+  },
+
+  getTrendingTvShows: async (): Promise<Movie[]> => {
+    try {
+      const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}`);
+      if (!res.ok) throw new Error('API request failed');
+      const data = await res.json();
+      // map name/original_name to title/original_title for movie interface compatibility
+      return (data.results || []).map((item: any) => ({
+        ...item,
+        title: item.name || item.original_name || 'TV Series',
+      }));
+    } catch (error) {
+      console.error('getTrendingTvShows error:', error);
+      return [];
+    }
+  },
+
+  getTVDetails: async (id: string | number): Promise<any> => {
+    const res = await fetch(`${BASE_URL}/tv/${id}?api_key=${API_KEY}&append_to_response=videos,credits`);
+    if (!res.ok) throw new Error('API request failed');
+    const data = await res.json();
+    return {
+      ...data,
+      title: data.name || data.original_name || 'TV Series',
+      release_date: data.first_air_date || '',
+    };
+  },
+
+  getSimilarTV: async (id: string | number): Promise<Movie[]> => {
+    try {
+      const res = await fetch(`${BASE_URL}/tv/${id}/similar?api_key=${API_KEY}`);
+      if (!res.ok) throw new Error('API request failed');
+      const data = await res.json();
+      return (data.results || []).map((item: any) => ({
+        ...item,
+        title: item.name || item.original_name || 'TV Series',
+      }));
+    } catch (error) {
+      console.error('getSimilarTV error:', error);
+      return [];
+    }
+  },
+
+  searchTV: async (query: string): Promise<Movie[]> => {
+    try {
+      const res = await fetch(`${BASE_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+      if (!res.ok) throw new Error('API request failed');
+      const data = await res.json();
+      return (data.results || []).map((item: any) => ({
+        ...item,
+        title: item.name || item.original_name || 'TV Series',
+      }));
+    } catch (error) {
+      console.error('searchTV error:', error);
       return [];
     }
   }

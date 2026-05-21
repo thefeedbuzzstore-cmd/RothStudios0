@@ -1,0 +1,17 @@
+# robots.txt for RothStudios
+# Highly optimized for fast indexing and search discovery
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin
+
+# Block search engine crawling of private auth folders
+Disallow: /login
+Disallow: /register
+
+# Host configuration
+Host: rothstudios.com
+
+# Sitemap direction
+Sitemap: https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/sitemap.xml

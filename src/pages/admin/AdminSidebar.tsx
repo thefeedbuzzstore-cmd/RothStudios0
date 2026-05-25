@@ -19,7 +19,7 @@ export function AdminSidebar() {
     { name: 'Overview', path: '/admin', icon: LayoutDashboard },
     { name: 'User Management', path: '/admin/users', icon: Users },
     { name: 'Affiliate Control', path: '/admin/affiliates', icon: Settings },
-    { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
+    { name: 'Analytics & SEO', path: '/admin/analytics-seo', icon: BarChart3 },
   ];
 
   return (

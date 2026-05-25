@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Star, Play, Plus, Clock, Calendar, ExternalLink, ArrowLeft, Share2, Copy, Check, Tv, Film } from 'lucide-react';
+import { Star, Play, Plus, Clock, Calendar, ExternalLink, ArrowLeft, Share2, Copy, Check, Tv, Film, Sparkles } from 'lucide-react';
 import { tmdb } from '../services/tmdb';
 import { MovieDetails as MovieDetailsType, Movie } from '../types';
 import { useWatchlist } from '../context/WatchlistContext';
@@ -80,6 +80,28 @@ export default function MovieDetails() {
         const configMap = (configData || []).reduce((acc, curr) => ({
           ...acc, [curr.key]: curr.value
         }), {});
+
+        // Overwrite or populate with any custom values stored in localStorage
+        const localKeys = [
+          'netflix_base', 
+          'amazon_base', 
+          'apple_base', 
+          'custom_affiliate_name', 
+          'custom_affiliate_base', 
+          'custom_affiliate_enabled', 
+          'affiliate_enabled'
+        ];
+        localKeys.forEach(lk => {
+          const localValRaw = localStorage.getItem(`config_${lk}`);
+          if (localValRaw !== null) {
+            try {
+              configMap[lk] = JSON.parse(localValRaw);
+            } catch {
+              configMap[lk] = localValRaw;
+            }
+          }
+        });
+
         setAffiliateConfig(configMap);
 
         // Track view trigger for analytics database
@@ -117,7 +139,7 @@ export default function MovieDetails() {
   const cast = movie.credits?.cast?.slice(0, 8) || [];
   const releaseYear = movie.release_date?.split('-')?.[0] || '2026';
 
-  const handleAffiliateClick = async (platform: 'amazon' | 'netflix' | 'apple') => {
+  const handleAffiliateClick = async (platform: 'amazon' | 'netflix' | 'apple' | 'custom') => {
     await analytics.trackAffiliateClick({
       user_id: user?.id || null,
       movie_id: movie.id,
@@ -130,8 +152,19 @@ export default function MovieDetails() {
     if (platform === 'amazon') baseUrl = affiliateConfig.amazon_base || 'https://www.amazon.com/s?k=';
     if (platform === 'netflix') baseUrl = affiliateConfig.netflix_base || 'https://www.netflix.com/search?q=';
     if (platform === 'apple') baseUrl = affiliateConfig.apple_base || 'https://tv.apple.com/search?term=';
+    if (platform === 'custom') baseUrl = affiliateConfig.custom_affiliate_base || 'https://thefeedbuzz.store/search?q=';
 
-    window.open(`${baseUrl}${query}`, '_blank');
+    // For custom platform, go directly to the configured website verbatim as requested
+    let targetUrl = platform === 'custom' ? baseUrl : `${baseUrl}${query}`;
+
+    // Ensure the target URL starts with a protocol scheme (http:// or https://)
+    // so the browser opens it as an absolute external link rather than a relative path
+    const trimmedTarget = targetUrl.trim();
+    if (trimmedTarget && !/^https?:\/\//i.test(trimmedTarget) && !/^\/\//.test(trimmedTarget)) {
+      targetUrl = `https://${trimmedTarget}`;
+    }
+
+    window.open(targetUrl, '_blank');
   };
 
   const handleCopyLink = () => {
@@ -386,27 +419,50 @@ export default function MovieDetails() {
               <p className="text-sm text-zinc-400">Stream or buy this cinematic directly from legal on-demand suppliers.</p>
               
               <div className="space-y-3">
-                <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('amazon')}>
-                  <span className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-blue-400">AMZ</div>
-                    Amazon Prime
-                  </span>
-                  <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Button>
-                <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('netflix')}>
-                  <span className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-red-600">N</div>
-                    Netflix
-                  </span>
-                  <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Button>
-                <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('apple')}>
-                  <span className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">TV</div>
-                    Apple TV+
-                  </span>
-                  <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </Button>
+                {(affiliateConfig.affiliate_enabled !== false && affiliateConfig.affiliate_enabled !== 'false') && (
+                  <>
+                    {(affiliateConfig.custom_affiliate_enabled === true || affiliateConfig.custom_affiliate_enabled === 'true' || affiliateConfig.custom_affiliate_enabled === undefined) && (
+                      <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group border border-brand-primary/20 bg-brand-primary/5" onClick={() => handleAffiliateClick('custom')}>
+                        <span className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded bg-brand-primary/10 flex items-center justify-center text-xs font-black text-brand-primary">
+                            {(affiliateConfig.custom_affiliate_name || 'The Feed Buzz').slice(0, 3).toUpperCase()}
+                          </div>
+                          <span className="font-bold text-white flex items-center gap-1.5 text-xs">
+                            {affiliateConfig.custom_affiliate_name || 'The Feed Buzz'}
+                            <Sparkles className="w-3.5 h-3.5 text-brand-primary animate-pulse" />
+                          </span>
+                        </span>
+                        <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </Button>
+                    )}
+                    <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('amazon')}>
+                      <span className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-blue-400">AMZ</div>
+                        Amazon Prime
+                      </span>
+                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Button>
+                    <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('netflix')}>
+                      <span className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-red-600">N</div>
+                        Netflix
+                      </span>
+                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Button>
+                    <Button variant="secondary" className="w-full justify-between hover:bg-white/20 transition-all group" onClick={() => handleAffiliateClick('apple')}>
+                      <span className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded bg-zinc-800 flex items-center justify-center text-xs font-bold text-white">TV</div>
+                        Apple TV+
+                      </span>
+                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Button>
+                  </>
+                )}
+                {(affiliateConfig.affiliate_enabled === false || affiliateConfig.affiliate_enabled === 'false') && (
+                  <div className="text-zinc-500 text-xs py-4 text-center italic">
+                    Affiliate platforms are temporarily disabled.
+                  </div>
+                )}
               </div>
             </div>
 

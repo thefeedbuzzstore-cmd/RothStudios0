@@ -20,6 +20,7 @@ import Register from './pages/auth/Register';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
 import AffiliateControl from './pages/admin/AffiliateControl';
+import AnalyticsSeo from './pages/admin/AnalyticsSeo';
 import { analytics } from './services/analytics';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
@@ -60,6 +61,7 @@ function AppContent() {
           <Route path="/admin/users" element={<UserManagement />} />
           <Route path="/admin/affiliates" element={<AffiliateControl />} />
           <Route path="/admin/analytics" element={<AdminDashboard />} />
+          <Route path="/admin/analytics-seo" element={<AnalyticsSeo />} />
         </Routes>
       </main>
       

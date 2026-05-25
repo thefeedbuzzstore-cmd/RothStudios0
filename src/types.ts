@@ -59,7 +59,7 @@ export interface AffiliateClick {
   id: string;
   user_id: string | null;
   movie_id: number;
-  platform: 'amazon' | 'netflix' | 'apple';
+  platform: 'amazon' | 'netflix' | 'apple' | 'custom';
   created_at: string;
 }
 

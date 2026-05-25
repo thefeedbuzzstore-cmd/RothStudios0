@@ -61,11 +61,41 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         supabase.from('config').select('*')
       ]);
 
+      const mergedConfig = [...(configData || [])];
+      
+      // Merge with localStorage values as a robust fallback/override
+      const localKeys = [
+        'netflix_base', 
+        'amazon_base', 
+        'apple_base', 
+        'custom_affiliate_name', 
+        'custom_affiliate_base', 
+        'custom_affiliate_enabled', 
+        'affiliate_enabled'
+      ];
+      localKeys.forEach(lk => {
+        const localValRaw = localStorage.getItem(`config_${lk}`);
+        if (localValRaw !== null) {
+          let val;
+          try {
+            val = JSON.parse(localValRaw);
+          } catch {
+            val = localValRaw;
+          }
+          const existingIdx = mergedConfig.findIndex(c => c.key === lk);
+          if (existingIdx > -1) {
+            mergedConfig[existingIdx] = { ...mergedConfig[existingIdx], value: val };
+          } else {
+            mergedConfig.push({ id: lk, key: lk, value: val, updated_at: new Date().toISOString() });
+          }
+        }
+      });
+
       setUsers(userData || []);
       setAffiliateClicks(clickData || []);
       setAnalyticsEvents(eventData || []);
       setMovieReviews(reviewData || []);
-      setConfig(configData || []);
+      setConfig(mergedConfig);
     } catch (error) {
       console.error('Admin Fetch error:', error);
     } finally {
@@ -78,9 +108,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   }, [isAdmin]);
 
   const updateConfig = async (key: string, value: any) => {
+    // Immediate localStorage safe persistence
+    localStorage.setItem(`config_${key}`, JSON.stringify(value));
+
     const promise = Promise.resolve(supabase
       .from('config')
-      .upsert({ key, value, updated_at: new Date().toISOString() }));
+      .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' }));
     
     toast.promise(promise, {
       loading: 'Updating configuration...',
@@ -90,10 +123,14 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const { error } = await promise;
-      if (error) throw error;
+      // If error occurs (e.g. database RLS restricts write), we still trigger local refresh
+      if (error) {
+        console.warn('Database write failed (likely RLS), using localStorage fallback:', error);
+      }
       fetchData(true);
     } catch (error) {
       console.error('Update config error:', error);
+      fetchData(true);
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from './AdminDashboard';
 import { useAdmin } from '../../context/AdminContext';
-import { Globe, Save, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Globe, Save, AlertCircle, CheckCircle2, Link2, Sparkles } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { motion } from 'motion/react';
 
@@ -16,6 +16,9 @@ export default function AffiliateControl() {
     netflix_base: 'https://www.netflix.com/search?q=',
     amazon_base: 'https://www.amazon.com/s?k=',
     apple_base: 'https://tv.apple.com/search?term=',
+    custom_affiliate_name: 'The Feed Buzz',
+    custom_affiliate_base: 'https://thefeedbuzz.store/search?q=',
+    custom_affiliate_enabled: true,
     affiliate_enabled: true
   });
 
@@ -26,7 +29,10 @@ export default function AffiliateControl() {
         netflix_base: getConfigValue('netflix_base') || 'https://www.netflix.com/search?q=',
         amazon_base: getConfigValue('amazon_base') || 'https://www.amazon.com/s?k=',
         apple_base: getConfigValue('apple_base') || 'https://tv.apple.com/search?term=',
-        affiliate_enabled: getConfigValue('affiliate_enabled') ?? true
+        custom_affiliate_name: getConfigValue('custom_affiliate_name') || 'The Feed Buzz',
+        custom_affiliate_base: getConfigValue('custom_affiliate_base') || 'https://thefeedbuzz.store/search?q=',
+        custom_affiliate_enabled: getConfigValue('custom_affiliate_enabled') === true || getConfigValue('custom_affiliate_enabled') === 'true' || getConfigValue('custom_affiliate_enabled') === undefined,
+        affiliate_enabled: getConfigValue('affiliate_enabled') === true || getConfigValue('affiliate_enabled') === 'true' || getConfigValue('affiliate_enabled') === undefined
       });
     }
   }, [config]);
@@ -114,6 +120,52 @@ export default function AffiliateControl() {
               <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${links.affiliate_enabled ? 'left-7' : 'left-1'}`} />
             </button>
           </div>
+
+          <div className="p-6 bg-brand-primary/5 rounded-2xl border border-brand-primary/10 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-brand-primary animate-pulse" />
+                <div className="text-left">
+                  <h4 className="text-white font-bold text-sm">Custom Website Affiliate</h4>
+                  <p className="text-xs text-zinc-400">Add and display your own website or store search link in the list of supplier platforms.</p>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setLinks({ ...links, custom_affiliate_enabled: !links.custom_affiliate_enabled })}
+                className={`w-14 h-8 rounded-full transition-all relative ${links.custom_affiliate_enabled ? 'bg-brand-primary' : 'bg-zinc-800'}`}
+              >
+                <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${links.custom_affiliate_enabled ? 'left-7' : 'left-1'}`} />
+              </button>
+            </div>
+
+            {links.custom_affiliate_enabled && (
+              <div className="grid md:grid-cols-2 gap-4 pt-2">
+                <div className="space-y-2 text-left">
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Website Display Name</label>
+                  <input 
+                    type="text" 
+                    value={links.custom_affiliate_name}
+                    onChange={(e) => setLinks({ ...links, custom_affiliate_name: e.target.value })}
+                    placeholder="e.g. The Feed Buzz"
+                    className="w-full bg-zinc-900/80 border border-white/5 rounded-xl py-2.5 px-3.5 text-white text-sm focus:ring-2 focus:ring-brand-primary/50 outline-none font-medium"
+                  />
+                </div>
+                <div className="space-y-2 text-left">
+                  <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Website Base / Search URL</label>
+                  <input 
+                    type="text" 
+                    value={links.custom_affiliate_base}
+                    onChange={(e) => setLinks({ ...links, custom_affiliate_base: e.target.value })}
+                    placeholder="e.g. https://thefeedbuzz.store/search?q="
+                    className="w-full bg-zinc-900/80 border border-white/5 rounded-xl py-2.5 px-3.5 text-white text-sm focus:ring-2 focus:ring-brand-primary/50 outline-none font-mono"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="h-px bg-white/5" />
 
           <div className="grid gap-6">
             <div className="space-y-2">

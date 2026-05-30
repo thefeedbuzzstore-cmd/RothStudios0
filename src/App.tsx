@@ -8,24 +8,25 @@ import { WatchlistProvider } from './context/WatchlistContext';
 import { AuthProvider } from './context/AuthContext';
 import { AdminProvider } from './context/AdminContext';
 import { Navbar } from './components/Navbar';
-import Home from './pages/Home';
-import MovieDetails from './pages/MovieDetails';
-import Search from './pages/Search';
-import Watchlist from './pages/Watchlist';
-import Trending from './pages/Trending';
-import TopRated from './pages/TopRated';
-import GenrePage from './pages/GenrePage';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import AdminDashboard from './pages/admin/AdminDashboard';
-import UserManagement from './pages/admin/UserManagement';
-import AffiliateControl from './pages/admin/AffiliateControl';
-import AnalyticsSeo from './pages/admin/AnalyticsSeo';
+import { lazy, Suspense, useEffect } from 'react';
 import { analytics } from './services/analytics';
 import { useAuth } from './context/AuthContext';
-import { useEffect } from 'react';
-
 import { Toaster } from 'sonner';
+
+// Lazy-load page components to shrink initial JS bundle and increase Lighthouse Performance metrics
+const Home = lazy(() => import('./pages/Home'));
+const MovieDetails = lazy(() => import('./pages/MovieDetails'));
+const Search = lazy(() => import('./pages/Search'));
+const Watchlist = lazy(() => import('./pages/Watchlist'));
+const Trending = lazy(() => import('./pages/Trending'));
+const TopRated = lazy(() => import('./pages/TopRated'));
+const GenrePage = lazy(() => import('./pages/GenrePage'));
+const Login = lazy(() => import('./pages/auth/Login'));
+const Register = lazy(() => import('./pages/auth/Register'));
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
+const UserManagement = lazy(() => import('./pages/admin/UserManagement'));
+const AffiliateControl = lazy(() => import('./pages/admin/AffiliateControl'));
+const AnalyticsSeo = lazy(() => import('./pages/admin/AnalyticsSeo'));
 
 function AppContent() {
   const { user } = useAuth();
@@ -46,23 +47,30 @@ function AppContent() {
       <Toaster position="bottom-right" richColors theme="dark" />
       <Navbar />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<MovieDetails />} />
-          <Route path="/series/:id" element={<MovieDetails />} />
-          <Route path="/trending" element={<Trending />} />
-          <Route path="/top-rated" element={<TopRated />} />
-          <Route path="/genre/:genreSlug" element={<GenrePage />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/watchlist" element={<Watchlist />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/users" element={<UserManagement />} />
-          <Route path="/admin/affiliates" element={<AffiliateControl />} />
-          <Route path="/admin/analytics" element={<AdminDashboard />} />
-          <Route path="/admin/analytics-seo" element={<AnalyticsSeo />} />
-        </Routes>
+        <Suspense fallback={
+          <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
+            <div className="w-12 h-12 rounded-full border-4 border-brand-primary/20 border-t-brand-primary animate-spin" />
+            <p className="text-zinc-600 text-xs font-mono animate-pulse uppercase tracking-widest">Loading Cinema...</p>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/series/:id" element={<MovieDetails />} />
+            <Route path="/trending" element={<Trending />} />
+            <Route path="/top-rated" element={<TopRated />} />
+            <Route path="/genre/:genreSlug" element={<GenrePage />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/affiliates" element={<AffiliateControl />} />
+            <Route path="/admin/analytics" element={<AdminDashboard />} />
+            <Route path="/admin/analytics-seo" element={<AnalyticsSeo />} />
+          </Routes>
+        </Suspense>
       </main>
       
       <footer className="py-12 border-t border-white/5 bg-black/40 mt-20">

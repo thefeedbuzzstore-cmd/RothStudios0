@@ -69,18 +69,28 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Button size="icon" className="h-9 w-9 rounded-full bg-white text-black hover:bg-zinc-200">
+              <Button 
+                size="icon" 
+                aria-label={`Play ${movie.title}`} 
+                className="h-9 w-9 rounded-full bg-white text-black hover:bg-zinc-200"
+              >
                 <Play className="w-4 h-4 fill-current" />
               </Button>
               <Button 
                 variant="secondary" 
                 size="icon" 
+                aria-label={isAdded ? `Remove ${movie.title} from watchlist` : `Add ${movie.title} to watchlist`}
                 className={cn("h-9 w-9 rounded-full border border-white/20", isAdded && "bg-brand-primary/20 border-brand-primary/50")}
                 onClick={toggleWatchlist}
               >
                 <Plus className={cn("w-4 h-4 transition-transform", isAdded && "rotate-45 text-brand-primary")} />
               </Button>
-              <Button variant="secondary" size="icon" className="h-9 w-9 rounded-full border border-white/20">
+              <Button 
+                variant="secondary" 
+                size="icon" 
+                aria-label={`More information about ${movie.title}`} 
+                className="h-9 w-9 rounded-full border border-white/20"
+              >
                 <Info className="w-4 h-4" />
               </Button>
             </div>

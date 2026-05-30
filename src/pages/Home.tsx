@@ -24,19 +24,32 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let active = true;
     const fetchData = async () => {
       try {
+        // Step 1: Fetch above the fold content immediately to render the page in milliseconds
         const [
           trendingMoviesData,
           trendingSeriesData,
+        ] = await Promise.all([
+          tmdb.getTrendingMovies(),
+          tmdb.getTrendingTvShows(),
+        ]);
+
+        if (!active) return;
+
+        setTrendingMovies(trendingMoviesData);
+        setTrendingSeries(trendingSeriesData);
+        setLoading(false); // Immediate visual page transition!
+
+        // Step 2: Progressingly fetch other rows in background
+        const [
           topRatedData,
           upcomingData,
           popularData,
           actionData,
           dramaData,
         ] = await Promise.all([
-          tmdb.getTrendingMovies(),
-          tmdb.getTrendingTvShows(),
           tmdb.getTopRatedMovies(),
           tmdb.getUpcomingMovies(),
           tmdb.getPopularMovies(),
@@ -44,8 +57,8 @@ export default function Home() {
           tmdb.getMoviesByGenre(18), // Drama
         ]);
 
-        setTrendingMovies(trendingMoviesData);
-        setTrendingSeries(trendingSeriesData);
+        if (!active) return;
+
         setTopRated(topRatedData);
         setUpcoming(upcomingData);
         setPopular(popularData);
@@ -59,11 +72,13 @@ export default function Home() {
         setEditorPicks(picks);
       } catch (error) {
         console.error('Error fetching Home cinema groups:', error);
-      } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
     fetchData();
+    return () => {
+      active = false;
+    };
   }, []);
 
   if (loading) {

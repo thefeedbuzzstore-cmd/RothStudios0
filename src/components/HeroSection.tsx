@@ -15,9 +15,11 @@ export function HeroSection({ movie }: HeroSectionProps) {
       {/* Backdrop */}
       <div className="absolute inset-0">
         <img
-          src={tmdb.getBackdropUrl(movie.backdrop_path, 'original')}
+          src={tmdb.getBackdropUrl(movie.backdrop_path, 'w1280')}
           alt={movie.title}
           className="w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-transparent to-transparent" />

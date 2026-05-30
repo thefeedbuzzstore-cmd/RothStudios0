@@ -217,10 +217,11 @@ export default function MovieDetails() {
       <div className="relative w-full h-[70vh] md:h-[90vh] overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={tmdb.getBackdropUrl(movie.backdrop_path, 'original')}
+            src={tmdb.getBackdropUrl(movie.backdrop_path, 'w1280')}
             alt={generateMovieAltText(movie.title, 'backdrop', releaseYear)}
             className="w-full h-full object-cover"
             loading="eager" // Preload backdrop for outstanding Core Web Vitals (LCP) performance optimization
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-transparent to-transparent" />
@@ -311,6 +312,7 @@ export default function MovieDetails() {
                     onClick={handleCopyLink} 
                     className="p-2.5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors active:scale-90"
                     title="Copy URL"
+                    aria-label="Copy movie page link to clipboard"
                   >
                     {copied ? <Check className="w-5 h-5 text-brand-primary" /> : <Copy className="w-5 h-5" />}
                   </button>
@@ -320,6 +322,7 @@ export default function MovieDetails() {
                     rel="noreferrer"
                     className="p-2.5 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white transition-colors"
                     title="Share on Twitter"
+                    aria-label="Share this movie on Twitter"
                   >
                     <Share2 className="w-5 h-5" />
                   </a>

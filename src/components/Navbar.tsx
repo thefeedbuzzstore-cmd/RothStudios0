@@ -72,16 +72,16 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
-          <Link to="/search" className="p-2 text-zinc-400 hover:text-white transition-colors">
+          <Link to="/search" aria-label="Search Movies & series" className="p-2 text-zinc-400 hover:text-white transition-colors">
             <Search className="w-5 h-5" />
           </Link>
-          <Link to="/watchlist" className="p-2 text-zinc-400 hover:text-white transition-colors">
+          <Link to="/watchlist" aria-label="View My Watchlist" className="p-2 text-zinc-400 hover:text-white transition-colors">
             <Heart className="w-5 h-5" />
           </Link>
           
           {user ? (
             <div className="relative group">
-              <button className="flex items-center gap-2">
+              <button aria-label="User account details" className="flex items-center gap-2">
                 <div className="w-9 h-9 rounded-xl bg-brand-primary/20 flex items-center justify-center text-brand-primary text-xs font-bold border border-brand-primary/30 hover:bg-brand-primary/30 transition-all">
                   {user.email?.[0].toUpperCase()}
                 </div>

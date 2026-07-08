@@ -6,7 +6,7 @@
     <!-- Main Home Page -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
@@ -14,7 +14,7 @@
     <!-- Trending Page -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/trending</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>
@@ -22,55 +22,273 @@
     <!-- Top Rated Page -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/top-rated</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- Action Genre -->
+    <!-- Watchlist Public Sharing (Optional Discovery) -->
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/watchlist</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Genres Section (Primary Search Enclosure Categorization) -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/action</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <!-- Drama Genre -->
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/adventure</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/animation</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/comedy</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/crime</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/documentary</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/drama</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
-
-    <!-- Sci-Fi Genre -->
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/family</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/fantasy</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/history</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/horror</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/music</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/mystery</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/romance</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/sci-fi</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/thriller</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/war</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/genre/western</loc>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
     </url>
 
-    <!-- Interstellar Clean Route -->
+    <!-- Top Cinematic Masterpieces (Clean Dynamic Movie Slugs) -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/interstellar</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
-    <!-- John Wick Clean Route -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/john-wick</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/the-dark-knight</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/inception</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/avatar</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/pulp-fiction</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/gladiator</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/the-godfather</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/forrest-gump</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/the-matrix</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/spider-man-no-way-home</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/dune-part-two</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/oppenheimer</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/movie/barbie</loc>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- Breaking Bad TV Show Clean Route -->
+    <!-- Top Television Series (Clean Dynamic Series Slugs) -->
     <url>
         <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/breaking-bad</loc>
-        <lastmod>2026-05-21</lastmod>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/game-of-thrones</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/stranger-things</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/chernobyl</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/the-office</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/better-call-saul</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/peaky-blinders</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/rick-and-morty</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/the-last-of-us</loc>
+        <lastmod>2026-07-07</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/series/friends</loc>
+        <lastmod>2026-07-07</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

@@ -1,17 +1,34 @@
 # robots.txt for RothStudios
-# Highly optimized for fast indexing and search discovery
+# Engineered for maximum SEO crawl efficiency, high crawl budgets, and deep search index discoverability.
 
 User-agent: *
 Allow: /
+Allow: /trending
+Allow: /top-rated
+Allow: /genre/
+Allow: /movie/
+Allow: /series/
+
+# Block crawling of private administrative systems
 Disallow: /admin/
 Disallow: /admin
 
-# Block search engine crawling of private auth folders
+# Block search engine crawling of authentication gateways to protect user data privacy
 Disallow: /login
 Disallow: /register
 
+# Block search query URLs to prevent duplicate or thin results index clutter
+Disallow: /search
+Disallow: /search/
+Disallow: /search?*
+Disallow: /*?q=*
+Disallow: /*?api_key=*
+
+# Crawl Delay to prevent server throttling
+Crawl-delay: 1
+
 # Host configuration
-Host: rothstudios.com
+Host: ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app
 
 # Sitemap direction
 Sitemap: https://ais-pre-av6tbs67kfpt7lqmpofhq2-780663003234.europe-west2.run.app/sitemap.xml

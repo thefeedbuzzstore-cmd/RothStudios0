@@ -65,11 +65,42 @@ export default function MovieDetails() {
         }
 
         // Parallel TMDB & Supabase loads
-        const [movieData, similarData, { data: configData }, { data: reviewData }] = await Promise.all([
+        // Safe helpers so that if Supabase is unconfigured, has bad credentials, or fails, the page still loads perfectly
+        const fetchConfigSafe = async () => {
+          try {
+            const url = import.meta.env.VITE_SUPABASE_URL;
+            if (!url || url.includes('placeholder')) return [];
+            const { data, error } = await supabase.from('config').select('*');
+            if (error) throw error;
+            return data || [];
+          } catch (err) {
+            console.warn('Unable to load Supabase configuration, using local fallbacks:', err);
+            return [];
+          }
+        };
+
+        const fetchReviewsSafe = async () => {
+          try {
+            const url = import.meta.env.VITE_SUPABASE_URL;
+            if (!url || url.includes('placeholder')) return [];
+            const { data, error } = await supabase
+              .from('movie_reviews')
+              .select('*')
+              .eq('movie_id', Number(actualId))
+              .order('created_at', { ascending: false });
+            if (error) throw error;
+            return data || [];
+          } catch (err) {
+            console.warn('Unable to load reviews from Supabase:', err);
+            return [];
+          }
+        };
+
+        const [movieData, similarData, configData, reviewData] = await Promise.all([
           isSeries ? tmdb.getTVDetails(actualId) : tmdb.getMovieDetails(actualId),
           isSeries ? tmdb.getSimilarTV(actualId) : tmdb.getSimilarMovies(actualId),
-          supabase.from('config').select('*'),
-          supabase.from('movie_reviews').select('*').eq('movie_id', Number(actualId)).order('created_at', { ascending: false })
+          fetchConfigSafe(),
+          fetchReviewsSafe()
         ]);
 
         setMovie(movieData);

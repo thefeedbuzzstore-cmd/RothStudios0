@@ -116,7 +116,15 @@ export function Navbar() {
                 )}
 
                 <button 
-                  onClick={() => supabase.auth.signOut()}
+                  onClick={async () => {
+                    localStorage.removeItem('rothstudios_offline_session');
+                    try {
+                      await supabase.auth.signOut();
+                    } catch (e) {
+                      console.error('Sign out error:', e);
+                    }
+                    window.location.href = '/';
+                  }}
                   className="w-full flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-red-500/10 text-zinc-400 hover:text-red-500 transition-all text-left mt-1"
                 >
                   <UserIcon className="w-4 h-4" />

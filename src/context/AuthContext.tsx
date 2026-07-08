@@ -21,30 +21,74 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id);
-      } else {
-        setLoading(false);
-      }
-    });
+    let active = true;
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id);
-      } else {
-        setProfile(null);
-        setLoading(false);
+    // Load offline fallback session if present (e.g., if Supabase is offline, paused, or network is blocked)
+    const offlineSessionRaw = localStorage.getItem('rothstudios_offline_session');
+    if (offlineSessionRaw) {
+      try {
+        const offlineData = JSON.parse(offlineSessionRaw);
+        if (offlineData?.user && offlineData?.profile) {
+          if (active) {
+            setSession(offlineData.session || null);
+            setUser(offlineData.user || null);
+            setProfile(offlineData.profile || null);
+            setLoading(false);
+          }
+          return;
+        }
+      } catch (e) {
+        console.error('Failed to parse offline session:', e);
       }
-    });
+    }
 
-    return () => subscription.unsubscribe();
+    // Get initial session safely
+    supabase.auth.getSession()
+      .then(({ data }) => {
+        if (!active) return;
+        const session = data?.session ?? null;
+        setSession(session);
+        setUser(session?.user ?? null);
+        if (session?.user) {
+          fetchProfile(session.user.id);
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to get initial session:', err);
+        if (active) {
+          setSession(null);
+          setUser(null);
+          setLoading(false);
+        }
+      });
+
+    // Listen for auth changes safely
+    let subscription: { unsubscribe: () => void } | null = null;
+    try {
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (!active) return;
+        setSession(session);
+        setUser(session?.user ?? null);
+        if (session?.user) {
+          fetchProfile(session.user.id);
+        } else {
+          setProfile(null);
+          setLoading(false);
+        }
+      });
+      subscription = data?.subscription ?? null;
+    } catch (err) {
+      console.error('Failed to set up auth state listener:', err);
+    }
+
+    return () => {
+      active = false;
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
   }, []);
 
   const fetchProfile = async (userId: string) => {

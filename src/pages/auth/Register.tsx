@@ -38,7 +38,12 @@ export default function Register() {
       // We'll show a message or redirect.
       navigate('/login', { state: { message: 'Registration successful! Please sign in.' } });
     } catch (err: any) {
-      setError(err.message || 'An error occurred during registration');
+      const msg = err.message || '';
+      if (msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('network error') || msg.toLowerCase().includes('load failed')) {
+        setError('Connection failed (Failed to fetch). This usually means your Supabase project is paused (due to inactivity), your network/ad-blocker is blocking the request, or the environment variables are invalid. Please open your Supabase Dashboard, verify your project is active (resume/restore it if paused), or check your VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY variables.');
+      } else {
+        setError(msg || 'An error occurred during registration');
+      }
     } finally {
       setLoading(false);
     }
